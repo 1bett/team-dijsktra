@@ -1,6 +1,7 @@
 import streamlit as st
 import pandas as pd
 import networkx as nx
+import numpy as np
 import matplotlib.pyplot as plt
 import math
 from streamlit_option_menu import option_menu 
@@ -427,6 +428,12 @@ elif selected == "Dijkstra":
         """, unsafe_allow_html=True)
        
         edited = st.data_editor(matrix, use_container_width=True, num_rows="dynamic")
+        
+
+        if (edited.values < 0).any():
+            st.error("Les poids négatifs ne sont pas autorisés avec l’algorithme de Dijkstra.")
+            st.stop()
+
         st.markdown("""
         <style>
     /* Bouton personnalisé */
@@ -464,6 +471,7 @@ elif selected == "Dijkstra":
         end = c2.selectbox(" ", nodes)
 
         if st.button("Calculer le plus court chemin"):
+
             
             graph = {}
             for i in nodes:
@@ -587,33 +595,50 @@ elif selected == "Dijkstra":
 
             
             G = nx.DiGraph()
-            for i in nodes:
+
+
+            for i in graph:
                 for j, w in graph[i].items():
-                    G.add_edge(i, j, weight=w)
+                    if nodes.index(i) < nodes.index(j):   
+                        G.add_edge(i, j, weight=w)
 
-            pos = nx.kamada_kawai_layout(G)  
 
-            
+            pos = nx.kamada_kawai_layout(G)
+
             color_map = []
             for node in G.nodes():
                 if node == start:
-                    color_map.append("green")
+                    color_map.append("#2ecc71")   # vert
                 elif node == end:
-                    color_map.append("orange")
+                    color_map.append("#f39c12")   # orange
                 else:
-                    color_map.append("#00B4D8")
+                    color_map.append("#3498db")   # bleu
 
-            plt.figure(figsize=(10, 8))
-            nx.draw(G, pos, with_labels=True, node_color=color_map, node_size=900, edge_color="gray", arrows=True)
+            plt.figure(figsize=(9, 7))
+            nx.draw(
+                G, pos,
+                with_labels=True,
+                node_color=color_map,
+                node_size=900,
+                font_size=12,
+                edge_color="#555",
+                width=2,
+                arrows=True
+            )
 
-            
-            edge_labels = nx.get_edge_attributes(G, 'weight')
-            nx.draw_networkx_edge_labels(G, pos, edge_labels=edge_labels, font_size=10)
+            edge_labels = nx.get_edge_attributes(G, "weight")
+            nx.draw_networkx_edge_labels(G, pos, edge_labels=edge_labels)
 
             
             if dist != math.inf and parent[end] is not None:
                 path_edges = list(zip(path, path[1:]))
-                nx.draw_networkx_edges(G, pos, edgelist=path_edges, edge_color="red", width=3, arrows=True)
+                nx.draw_networkx_edges(
+                    G, pos,
+                    edgelist=path_edges,
+                    edge_color="red",
+                    width=4,
+                    arrows=True
+                )
 
             st.pyplot(plt)
 
