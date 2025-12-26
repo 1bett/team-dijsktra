@@ -145,29 +145,7 @@ elif selected == "À propos":
         """, unsafe_allow_html=True)
 
         st.markdown('<div class="apropos-card">', unsafe_allow_html=True)
-        
-      
-
-
-
-        col1, col2,col3,col4 = st.columns(4) 
-        with col1:
-            st.markdown("<b style='color: #1E3A8A; font-size:30px;'> Chef de projet</b>", unsafe_allow_html=True)
-            st.markdown("<b>Salah-Eddine Bechari</b>", unsafe_allow_html=True)
-        with col2:
-            st.markdown("<b style='color: #10B981; font-size:30px;'> Développement et codage</b>", unsafe_allow_html=True)
-            st.markdown("<b>IBTIHAL MERIMI </b>: Algorithmes et Backend<br><b>Souhail Bouazzaoui , Nouhaila Yazidi , Manal Zamraoui </b>: Frontend", unsafe_allow_html=True)
-        with col3:
-            st.markdown("<b style='color: #8B5CF6;font-size:30px;'>Documentation et organisation</b>", unsafe_allow_html=True)
-            st.markdown("<b>Raouaa Hachmi, Ouafae Rhomari , Doae Rahhaoui</b>", unsafe_allow_html=True)
-        with col4:
-            st.markdown("<b style=' color: #F59E0B;font-size:30px;'>Rédaction et mise en page du rapport</b>", unsafe_allow_html=True)
-            st.markdown("<b> Youness Maimouni , Salah-Eddine Bechari , Noumidia Rotbi</b>", unsafe_allow_html=True)
-        
-           
-
- 
-       
+            
 
         st.markdown('<b style="font-size:30px;">Objectif du projet</b>', unsafe_allow_html=True)
         st.markdown("""
